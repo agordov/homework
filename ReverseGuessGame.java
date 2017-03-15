@@ -14,7 +14,6 @@ public class ReverseGuessGame {
             printNum(rightB);
         }
         int middle = (leftB + rightB) / 2;
-        System.out.println(leftB + " " + middle + " " + rightB);
         System.out.println("Is you number more than " + middle + "?");
         Scanner reader = new Scanner(System.in);
         String inLine;
