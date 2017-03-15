@@ -12,6 +12,7 @@ public class RandomNumber {
 
     public static int randomNumberMax(int lowerN, int higherN) {
         int randN = randomNumber(lowerN, higherN);
+        System.out.println(randN);
         int a = randN % 10;
         randN /= 10;
         int b = randN % 10;
