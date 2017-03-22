@@ -1,7 +1,6 @@
 package homework.City;
 
-/**
- * Created by aleksey on 22.03.17.
- */
-public class Building {
+public interface Building {
+    void build();
+    void destroy();
 }
