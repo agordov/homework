@@ -57,7 +57,7 @@ public class OwnArrayList <T> implements List<T>{
     }
 
     public boolean inRange(int index) {
-        return index >= 0 && index < size;
+        return (index >= 0 && index < size);
     }
 
     @Override
@@ -95,9 +95,11 @@ public class OwnArrayList <T> implements List<T>{
         }
         Object[] oldArray = array;
         Object[] newArray = new Object[size-1];
-        int j = 0;
-        for (int i = 0; i < size ; i++) {
-            newArray[j++] = oldArray[i];
+        for (int i = 0; i < index ; i++) {
+            newArray[i] = oldArray[i];
+        }
+        for (int i = 0; i < size - index - 1; i++) {
+            newArray[index+i] = oldArray[i+index+1];
         }
         array = newArray;
         size--;
