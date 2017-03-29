@@ -1,11 +1,8 @@
 package homework.MyArrayList;
 
-import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 
 public class Main {
 
