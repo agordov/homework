@@ -5,11 +5,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Objects;
 
-public class FileIterator implements Iterator<Object>{
+public class FileIterator implements Iterator<String>{
 
-    private String line = null;
-    private BufferedReader reader = null;
+    private String line;
+    private BufferedReader reader;
 
     FileIterator(String path) {
         File file = new File(path);
@@ -25,20 +26,8 @@ public class FileIterator implements Iterator<Object>{
         try {
             reader = new BufferedReader(new FileReader(file));
             line = reader.readLine();
-            if (line == null) {
-                reader.close();
-                reader = null;
-            }
         } catch (Exception e) {
             e.printStackTrace();
-            if (reader != null) {
-                try {
-                    reader.close();
-                    reader = null;
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
-            }
         }
     }
 
@@ -52,41 +41,25 @@ public class FileIterator implements Iterator<Object>{
         if (!file.canRead()) {
             throw new IllegalArgumentException("Unable to read file " + file.getName());
         }
-        try {
-            reader = new BufferedReader(new FileReader(file));
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            this.reader = reader;
             line = reader.readLine();
-            if (line == null) {
-                reader.close();
-                reader = null;
-            }
         } catch (Exception e) {
             e.printStackTrace();
-            if (reader != null) {
-                try {
-                    reader.close();
-                    reader = null;
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
-            }
         }
     }
 
     @Override
     public boolean hasNext() {
-        return line != null;
+        return Objects.nonNull(line);
     }
 
     @Override
-    public Object next() {
+    public String next() {
         String nextLine = line;
         if (hasNext()) {
             try {
                 line = reader.readLine();
-                if (!hasNext()) {
-                    reader.close();
-                    reader = null;
-                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
