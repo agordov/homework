@@ -41,8 +41,8 @@ public class FileIterator implements Iterator<String>{
         if (!file.canRead()) {
             throw new IllegalArgumentException("Unable to read file " + file.getName());
         }
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            this.reader = reader;
+        try {
+            reader = new BufferedReader(new FileReader(file));
             line = reader.readLine();
         } catch (Exception e) {
             e.printStackTrace();
