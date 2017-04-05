@@ -2,6 +2,7 @@ package homework.Files;
 
 import java.io.*;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class FileIterator implements Iterator<String> {
@@ -9,35 +10,14 @@ public class FileIterator implements Iterator<String> {
     private String line;
     private BufferedReader reader;
 
-    FileIterator(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new IllegalArgumentException("No such file or directory " + file.getPath());
-        } else if (file.isFile()) {
-            try {
-                reader = new BufferedReader(new FileReader(path));
-                line = reader.readLine();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new IllegalArgumentException("File type isn't file " + file.getPath());
-        }
+    FileIterator(String path) throws IOException {
+        reader = new BufferedReader(new FileReader(path));
+        line = reader.readLine();
     }
 
-    FileIterator(File file) {
-        if (!file.exists()) {
-            throw new IllegalArgumentException("No such file or directory " + file.getPath());
-        } else if (file.isFile()) {
-            try {
-                reader = new BufferedReader(new FileReader(file));
-                line = reader.readLine();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new IllegalArgumentException("File type isn't " + file.getPath());
-        }
+    FileIterator(File file) throws IOException {
+        reader = new BufferedReader(new FileReader(file));
+        line = reader.readLine();
     }
 
     @Override
@@ -46,14 +26,10 @@ public class FileIterator implements Iterator<String> {
     }
 
     @Override
-    public String next() {
+    public String next() throws IOException{
         String nextLine = line;
         if (hasNext()) {
-            try {
-                line = reader.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            line = reader.readLine();
         }
         return nextLine;
     }
