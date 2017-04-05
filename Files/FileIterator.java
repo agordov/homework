@@ -2,7 +2,6 @@ package homework.Files;
 
 import java.io.*;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class FileIterator implements Iterator<String> {
@@ -26,7 +25,7 @@ public class FileIterator implements Iterator<String> {
     }
 
     @Override
-    public String next() throws NoSuchElementException{
+    public String next() {
         String nextLine = line;
         if (hasNext()) {
             try {
