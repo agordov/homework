@@ -26,10 +26,17 @@ public class FileIterator implements Iterator<String> {
     }
 
     @Override
-    public String next() throws IOException{
+    public String next() throws NoSuchElementException{
         String nextLine = line;
         if (hasNext()) {
-            line = reader.readLine();
+            try {
+                line = reader.readLine();
+                if (Objects.isNull(line)) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                throw new IllegalStateException(e);
+            }
         }
         return nextLine;
     }
