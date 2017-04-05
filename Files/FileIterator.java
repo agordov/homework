@@ -1,13 +1,10 @@
 package homework.Files;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.Objects;
 
-public class FileIterator implements Iterator<String>{
+public class FileIterator implements Iterator<String> {
 
     private String line;
     private BufferedReader reader;
@@ -15,37 +12,31 @@ public class FileIterator implements Iterator<String>{
     FileIterator(String path) {
         File file = new File(path);
         if (!file.exists()) {
-            throw new IllegalArgumentException("No such file or directory ");
-        }
-        if (file.isDirectory()) {
-            throw new IllegalArgumentException("File " + file.getName() + " is directory ");
-        }
-        if (!file.canRead()) {
-            throw new IllegalArgumentException("Unable to read file " + file.getName());
-        }
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            line = reader.readLine();
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllegalArgumentException("No such file or directory " + file.getPath());
+        } else if (file.isFile()) {
+            try {
+                reader = new BufferedReader(new FileReader(path));
+                line = reader.readLine();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalArgumentException("File type isn't file " + file.getPath());
         }
     }
 
     FileIterator(File file) {
-        if (file.exists()) {
-            throw new IllegalArgumentException("No such file or directory ");
-        }
-        if (file.isDirectory()) {
-            throw new IllegalArgumentException("File " + file.getName() + " is directory ");
-        }
-        if (!file.canRead()) {
-            throw new IllegalArgumentException("Unable to read file " + file.getName());
-        }
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            line = reader.readLine();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!file.exists()) {
+            throw new IllegalArgumentException("No such file or directory " + file.getPath());
+        } else if (file.isFile()) {
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                line = reader.readLine();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalArgumentException("File type isn't " + file.getPath());
         }
     }
 
