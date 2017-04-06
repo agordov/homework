@@ -33,13 +33,13 @@ public class FileIterator implements Iterator<String> {
                 if (Objects.isNull(line)) {
                     reader.close();
                 }
-            } catch (IOException e) 
+            } catch (IOException e) {
                 throw new IllegalStateException(e);
-            try {
-                reader.close();
-            } catch (IOException e2) {
-                throw new IllegalStateException(e);
-            }
+                try {
+                    reader.close();
+                } catch (IOException e2) {
+                    throw new IllegalStateException(e);
+                }
             }
         }
         return nextLine;
