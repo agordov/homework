@@ -9,11 +9,6 @@ public class FileIterator implements Iterator<String> {
     private String line;
     private BufferedReader reader;
 
-    FileIterator(String path) throws IOException {
-        reader = new BufferedReader(new FileReader(path));
-        line = reader.readLine();
-    }
-
     FileIterator(File file) throws IOException {
         reader = new BufferedReader(new FileReader(file));
         line = reader.readLine();
@@ -34,6 +29,11 @@ public class FileIterator implements Iterator<String> {
                     reader.close();
                 }
             } catch (IOException e) {
+                try {
+                    reader.close();
+                } catch (IOException e2) {
+                    throw new IllegalStateException(e);
+                }
                 throw new IllegalStateException(e);
             }
         }
