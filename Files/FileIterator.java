@@ -35,6 +35,11 @@ public class FileIterator implements Iterator<String> {
                     throw new IllegalStateException(e);
                 }
                 throw new IllegalStateException(e);
+                try {
+                    reader.close();
+                } catch (IOException e2) {
+                    throw new IllegalStateException(e);
+                }
             }
         }
         return nextLine;
