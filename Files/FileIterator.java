@@ -3,7 +3,7 @@ package homework.Files;
 import java.io.*;
 import java.util.*;
 
-public class FileIterator implements Iterator<String> {
+public class FileIterator implements Iterator<String>, AutoCloseable {
 
     private String line;
     private BufferedReader reader;
@@ -31,15 +31,24 @@ public class FileIterator implements Iterator<String> {
             } catch (IOException e) {
                 ex = e;
                 try {
-                    if (Objects.nonNull(reader)) {
-                        reader.close();
-                    }
-                } catch (IOException e2) {
+                    close();
+                } catch (Exception e2) {
                     throw new IllegalStateException(ex);
                 }
                 throw new IllegalStateException(ex);
             }
         }
         return nextLine;
+    }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            if (Objects.nonNull(reader)) {
+                reader.close();
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
     }
 }
