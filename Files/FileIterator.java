@@ -1,8 +1,7 @@
 package homework.Files;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.Objects;
+import java.util.*;
 
 public class FileIterator implements Iterator<String> {
 
@@ -22,6 +21,7 @@ public class FileIterator implements Iterator<String> {
     @Override
     public String next() {
         String nextLine = line;
+        Exception ex;
         if (hasNext()) {
             try {
                 line = reader.readLine();
@@ -29,12 +29,15 @@ public class FileIterator implements Iterator<String> {
                     reader.close();
                 }
             } catch (IOException e) {
+                ex = e;
                 try {
-                    reader.close();
+                    if (Objects.nonNull(reader)) {
+                        reader.close();
+                    }
                 } catch (IOException e2) {
-                    throw new IllegalStateException(e);
+                    throw new IllegalStateException(ex);
                 }
-                throw new IllegalStateException(e);
+                throw new IllegalStateException(ex);
             }
         }
         return nextLine;
