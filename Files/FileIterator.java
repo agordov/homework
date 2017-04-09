@@ -43,12 +43,8 @@ public class FileIterator implements Iterator<String>, AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        try {
-            if (Objects.nonNull(reader)) {
-                reader.close();
-            }
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
+        if (Objects.nonNull(reader)) {
+            reader.close();
         }
     }
 }
