@@ -5,8 +5,6 @@ import java.util.*;
 import java.util.List;
 
 public class CSVMiddle {
-    private static final double T = 0.2;
-    private static final int stepNum = 100;
     private static final String separator = ";";
     private static List<ArrayList<String>> fileText;
 
@@ -18,7 +16,7 @@ public class CSVMiddle {
             writer.write(str);
     }
 
-    private static void createCSV(File file) {
+    private static void createCSV(File file, int stepNum, double T) {
         try (FileWriter writer = new FileWriter(file)){
             for (int i = 0; i < stepNum; i++) {
                 writeStringCSV(writer, i * T + separator + randNum(0, 100) + "\n");
@@ -100,7 +98,9 @@ public class CSVMiddle {
 
     public static void main(String[] args) {
         File file = new File("src/homework/CSV/out.txt");
-        createCSV(file);
+        double T = 0.2;
+        int stepNum = 100;
+        createCSV(file, stepNum, T);
         fileText = readCSV(file);
         int middlePeriod = 3;
         middleInPeriod(fileText, middlePeriod);
