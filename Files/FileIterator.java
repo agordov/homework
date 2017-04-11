@@ -25,7 +25,7 @@ public class FileIterator implements Iterator<String>, AutoCloseable {
             line = reader.readLine();
             return nextLine;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException(e);
         }
     }
 
