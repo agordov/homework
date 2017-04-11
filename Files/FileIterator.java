@@ -19,32 +19,18 @@ public class FileIterator implements Iterator<String>, AutoCloseable {
     }
 
     @Override
-    public String next() {
-        String nextLine = line;
-        Exception ex;
-        if (hasNext()) {
-            try {
-                line = reader.readLine();
-                if (Objects.isNull(line)) {
-                    reader.close();
-                }
-            } catch (IOException e) {
-                ex = e;
-                try {
-                    close();
-                } catch (Exception e2) {
-                    throw new IllegalStateException(ex);
-                }
-                throw new IllegalStateException(ex);
-            }
+    public String next() throws NoSuchElementException{
+        try {
+            String nextLine = line;
+            line = reader.readLine();
+            return nextLine;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return nextLine;
     }
 
     @Override
     public void close() throws Exception {
-        if (Objects.nonNull(reader)) {
-            reader.close();
-        }
+        reader.close();
     }
 }
