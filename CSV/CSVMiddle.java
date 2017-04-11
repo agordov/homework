@@ -96,14 +96,18 @@ public class CSVMiddle {
         addColumn(middles);
     }
 
+    private static void countMiddle(File file, int middlePeriod) {
+        fileText = readCSV(file);
+        middleInPeriod(fileText, middlePeriod);
+        writeCSV(file);
+    }
+
     public static void main(String[] args) {
         File file = new File("src/homework/CSV/out.txt");
         double T = 0.2;
         int stepNum = 100;
         createCSV(file, stepNum, T);
-        fileText = readCSV(file);
         int middlePeriod = 3;
-        middleInPeriod(fileText, middlePeriod);
-        writeCSV(file);
+        countMiddle(file, middlePeriod);
     }
 }
