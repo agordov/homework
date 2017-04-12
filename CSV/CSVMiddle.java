@@ -5,8 +5,8 @@ import java.util.*;
 import java.util.List;
 
 public class CSVMiddle {
-    private static final String separator = ";";
-    private static List<ArrayList<String>> fileText;
+    private static final String SEPARATOR = ";";
+    private static List<List<String>> fileText;
 
     private static int randNum(int low, int high) {
         return (new Random().nextInt(high - low + 1) + low);
@@ -19,7 +19,7 @@ public class CSVMiddle {
     private static void createCSV(File file, int stepNum, double T) {
         try (FileWriter writer = new FileWriter(file)){
             for (int i = 0; i < stepNum; i++) {
-                writeStringCSV(writer, i * T + separator + randNum(0, 100) + "\n");
+                writeStringCSV(writer, i * T + SEPARATOR + randNum(0, 100) + "\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,10 +28,10 @@ public class CSVMiddle {
 
     private static void writeCSV(File file) {
         try (FileWriter writer = new FileWriter(file)) {
-            for (ArrayList<String> e : fileText) {
+            for (List<String> e : fileText) {
                 String str = "";
                 for (int i = 0 ; i < e.size(); i++) {
-                    str = str + e.get(i) + (i == (e.size()-1) ? "" :separator);
+                    str = str + e.get(i) + (i == (e.size()-1) ? "" : SEPARATOR);
                 }
                 writeStringCSV(writer, str + "\n");
             }
@@ -50,13 +50,13 @@ public class CSVMiddle {
         }
     }
 
-    private static List<ArrayList<String>> readCSV(File file) {
-        List<ArrayList<String>> text = new ArrayList<ArrayList<String>>();
+    private static List<List<String>> readCSV(File file) {
+        List<List<String>> text = new ArrayList<List<String>>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String[] line;
             int lines = lineCount(file);
             for (int i = 0 ; i < lines; i++) {
-                line = reader.readLine().split(separator);
+                line = reader.readLine().split(SEPARATOR);
                 text.add(new ArrayList<>(Arrays.asList(line)));
             }
         } catch (IOException e) {
@@ -77,7 +77,7 @@ public class CSVMiddle {
         return i;
     }
 
-    private static void middleInPeriod(List<ArrayList<String>> in, int middlePeriod) {
+    private static void middleInPeriod(List<List<String>> in, int middlePeriod) {
         int[] middleCount = new int[middlePeriod];
         List<String> middles = new ArrayList<>();
         int cur;
