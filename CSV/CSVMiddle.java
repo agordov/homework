@@ -16,17 +16,17 @@ public class CSVMiddle {
             writer.write(str);
     }
 
-    private void createCSV(File file, int stepNum, double T) {
+    private void createCSV(File file, int stepNum, double T) throws IllegalStateException{
         try (FileWriter writer = new FileWriter(file)){
             for (int i = 0; i < stepNum; i++) {
                 writeStringCSV(writer, i * T + SEPARATOR + randNum(0, 100) + "\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
     }
 
-    private void writeCSV(File file) {
+    private void writeCSV(File file) throws IllegalStateException{
         try (FileWriter writer = new FileWriter(file)) {
             for (List<String> e : fileText) {
                 String str = "";
@@ -36,7 +36,7 @@ public class CSVMiddle {
                 writeStringCSV(writer, str + "\n");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
     }
 
@@ -50,7 +50,7 @@ public class CSVMiddle {
         }
     }
 
-    private List<List<String>> readCSV(File file) {
+    private List<List<String>> readCSV(File file) throws IllegalStateException{
         List<List<String>> text = new ArrayList<List<String>>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String[] line;
@@ -60,19 +60,16 @@ public class CSVMiddle {
                 text.add(new ArrayList<>(Arrays.asList(line)));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(e);
         }
         return text;
     }
 
-    private int lineCount(File file) {
+    private int lineCount(File file) throws IOException{
         int i = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            while(reader.readLine() != null) {
-                i++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        while(reader.readLine() != null) {
+            i++;
         }
         return i;
     }
