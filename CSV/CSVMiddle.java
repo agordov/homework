@@ -8,15 +8,15 @@ public class CSVMiddle {
     private static final String SEPARATOR = ";";
     private static List<List<String>> fileText;
 
-    private static int randNum(int low, int high) {
+    private int randNum(int low, int high) {
         return (new Random().nextInt(high - low + 1) + low);
     }
 
-    private static void writeStringCSV(FileWriter writer, String str) throws IOException{
+    private void writeStringCSV(FileWriter writer, String str) throws IOException{
             writer.write(str);
     }
 
-    private static void createCSV(File file, int stepNum, double T) {
+    private void createCSV(File file, int stepNum, double T) {
         try (FileWriter writer = new FileWriter(file)){
             for (int i = 0; i < stepNum; i++) {
                 writeStringCSV(writer, i * T + SEPARATOR + randNum(0, 100) + "\n");
@@ -26,7 +26,7 @@ public class CSVMiddle {
         }
     }
 
-    private static void writeCSV(File file) {
+    private void writeCSV(File file) {
         try (FileWriter writer = new FileWriter(file)) {
             for (List<String> e : fileText) {
                 String str = "";
@@ -40,17 +40,17 @@ public class CSVMiddle {
         }
     }
 
-    private static void addColumn(List<String> column) {
+    private void addColumn(List<String> column) {
         addColumn(column, fileText.get(0).size());
     }
 
-    private static void addColumn(List<String> column, int index) {
+    private void addColumn(List<String> column, int index) {
         for (int i = 0; i < fileText.size(); i++) {
             fileText.get(i).add(index, column.get(i));
         }
     }
 
-    private static List<List<String>> readCSV(File file) {
+    private List<List<String>> readCSV(File file) {
         List<List<String>> text = new ArrayList<List<String>>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String[] line;
@@ -65,7 +65,7 @@ public class CSVMiddle {
         return text;
     }
 
-    private static int lineCount(File file) {
+    private int lineCount(File file) {
         int i = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             while(reader.readLine() != null) {
@@ -77,7 +77,7 @@ public class CSVMiddle {
         return i;
     }
 
-    private static void middleInPeriod(List<List<String>> in, int middlePeriod) {
+    private void middleInPeriod(List<List<String>> in, int middlePeriod) {
         int[] middleCount = new int[middlePeriod];
         List<String> middles = new ArrayList<>();
         int cur;
@@ -96,7 +96,7 @@ public class CSVMiddle {
         addColumn(middles);
     }
 
-    private static void countMiddle(File file, int middlePeriod) {
+    private void countMiddle(File file, int middlePeriod) {
         fileText = readCSV(file);
         middleInPeriod(fileText, middlePeriod);
         writeCSV(file);
@@ -104,10 +104,11 @@ public class CSVMiddle {
 
     public static void main(String[] args) {
         File file = new File("src/homework/CSV/out.txt");
+        CSVMiddle csvMiddle = new CSVMiddle();
         double T = 0.2;
         int stepNum = 100;
-        createCSV(file, stepNum, T);
+        csvMiddle.createCSV(file, stepNum, T);
         int middlePeriod = 3;
-        countMiddle(file, middlePeriod);
+        csvMiddle.countMiddle(file, middlePeriod);
     }
 }
